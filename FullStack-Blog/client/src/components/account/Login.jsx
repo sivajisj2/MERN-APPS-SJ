@@ -50,13 +50,33 @@ const Text = styled(Typography)`
  font-size:15px;
  color: #7D7C7C;
 `;
+
+const loginInitialValues = {
+    username: '',
+    password: ''
+};
+
+const signupInitialValues = {
+    name: '',
+    username: '',
+    password: '',
+};
+  
+
 const Login = ()=>{
-     const [account , toggleAccount ] = useState('login')
+
+    const [signup,setSignUp] = useState(signupInitialValues)
+     const [account , toggleAccount]  = useState('login')
     
      function toggleSignUp(){
         toggleAccount(prevState => prevState === "signup" ? "login" : "signup");
     }
      
+    const onInputChange = (e)=>{
+        setSignUp( {...signup, [e.target.name]:e.target.value});
+       
+    }
+   
 
     return (
          <Component>
@@ -73,9 +93,9 @@ const Login = ()=>{
                         </Wrapper> 
                    :
                         <Wrapper>
-                        <TextField label="Enter Name" variant="standard"/>
-                        <TextField label="Enter Username" variant="standard"/>
-                        <TextField label="Enter Password" variant="standard"/>
+                        <TextField label="Enter Name"  name="name" onChange={(e)=>onInputChange(e)} variant="standard"/>
+                        <TextField label="Enter Username"  name="username" onChange={(e)=>onInputChange(e)} variant="standard"/>
+                        <TextField label="Enter Password"  name="password" onChange={(e)=>onInputChange(e)} variant="standard"/>
 
                         <SignUpButton >SignUp</SignUpButton>
                         <Text style={{textAlign:"center"}}>OR</Text>
