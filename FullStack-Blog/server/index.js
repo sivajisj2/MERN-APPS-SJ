@@ -1,4 +1,6 @@
 require('dotenv').config()
+const cors = require('cors')
+const bodyParser = require('body-parser')
 
 const express = require('express')
 const app = express()
@@ -8,6 +10,10 @@ const connection = require('./database/db.js')
 const PORT = process.env.PORT || 5500
 const username = process.env.DB_USERNAME
 const password = process.env.DB_PASSWORD
+
+app.use(cors())
+app.use(bodyParser.json({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json())
 app.use('/', Router)
 
@@ -18,3 +24,5 @@ connection(username, password).then(() => {
 }).catch(err => {
     console.error("Failed to connect to the database:", err)
 })
+
+

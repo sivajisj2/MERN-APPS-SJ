@@ -1,4 +1,4 @@
-exports.API_NOTIFICATION_MESSAGE = {
+export const API_NOTIFICATION_MESSAGE = {
     loading: {
         title :"loading..",
         message : "Data is being loaded please wait"
@@ -21,3 +21,9 @@ exports.API_NOTIFICATION_MESSAGE = {
     },
 
 }
+
+
+export const SERVICE_URLS = {
+    userSignup: { url: '/signup', method: 'POST' }
+}
+

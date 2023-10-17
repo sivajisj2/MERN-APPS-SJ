@@ -1,5 +1,5 @@
 import axios from 'axios'
-const { API_NOTIFICATION_MESSAGE } = require('../constants/config');
+import { API_NOTIFICATION_MESSAGE, SERVICE_URLS } from '../constants/config';
 
 
 const API_URL = "https://5000-sivajisj2-mernappssj-c594900gaye.ws-us105.gitpod.io"
@@ -34,20 +34,32 @@ axiosInstance.interceptors.response.use(
 
 // if success -> return {isSuccess :true, data:object ,code :200}
 // if failure -> return {isFailure :true,status :String ,msg:String,code :int}
-const processResponse =(response) => {
+// const processResponse =(response) => {
 
-    if(response?.status === 200){
-        return {isSuccess :true, data:response.data}
-    }else{
+//     if(response?.status === 200){
+//         return {isSuccess :true, data:response.data}
+//     }else{
+//         return {
+//             isFailure :true,
+//             status :response?.status,
+//             msg:response?.msg,
+//             code :response?.code}
+//     }
+
+// }
+
+const processResponse = (response) => {
+    if (response?.status === 200) {
+        return { isSuccess:true, data:response.data }
+    } else {
         return {
-            isFailure :true,
-            status :response?.status,
-            msg:response?.msg,
-            code :response?.code}
+            isFailure: true,
+            status: response?.status,
+            msg: response?.msg,
+            code: response?.code
+        }
     }
-
 }
-
 
 
 
@@ -85,3 +97,37 @@ const processError = (error) => {
 }
 
 const API ={}
+
+for(const [key,value] of Object.entries(SERVICE_URLS)){
+    API[key] = (body,showUploadProgress,showDownloadProgress)=>{
+        axiosInstance({
+            method : value.method,
+            url : value.url,
+            data :body,
+            responseType : value.responseType,
+            onUploadProgress: function(progressEvent){
+                if(showUploadProgress){
+                    let percentageCompleted = Math.round((progressEvent.loaded * 100)/progressEvent.total )
+                    showUploadProgress(percentageCompleted)
+                }
+            },
+            onDownloadProgress: function(progressEvent){
+                if(showDownloadProgress){
+                    let percentageCompleted = Math.round((progressEvent.loaded * 100)/progressEvent.total )
+                    showDownloadProgress(percentageCompleted)
+                }
+            },
+        })
+        .then(response => {
+            // You can process the response here if needed
+            return response;
+        })
+        .catch(error => {
+            console.error("Error in API call:", error);
+            throw error;
+        });
+    }
+}
+
+
+export default API;
