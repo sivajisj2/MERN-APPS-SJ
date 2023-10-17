@@ -1,14 +1,14 @@
 const User = require("../model/userModel");
 
 
-const signUpUser = async(req,res) => {
+const signUpUser = async(request,response) => {
      try{
-    const user = req.body;
+    const user = request.body;
     const newUser = User(user)
     await newUser.save()
-    return res.status(200).json({msg: "signup successfull"})
+    return response.status(200).json({msg: "signup successfull"})
      }catch(err){
-      res.status(500).json({msg :"error while signup the user"})
+      response.status(500).json({msg :"error while signup the user"})
      }
 }
 
