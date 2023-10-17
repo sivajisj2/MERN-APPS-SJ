@@ -77,7 +77,9 @@ const Login = ()=>{
        
     }
    
-
+    const signUpUser =() => {
+        
+    }
     return (
          <Component>
             <Box>
@@ -97,7 +99,7 @@ const Login = ()=>{
                         <TextField label="Enter Username"  name="username" onChange={(e)=>onInputChange(e)} variant="standard"/>
                         <TextField label="Enter Password"  name="password" onChange={(e)=>onInputChange(e)} variant="standard"/>
 
-                        <SignUpButton >SignUp</SignUpButton>
+                        <SignUpButton onClick={()=>signUpUser()} >SignUp</SignUpButton>
                         <Text style={{textAlign:"center"}}>OR</Text>
                         <LoginButton variant="contained" onClick={toggleSignUp} >Already have an account</LoginButton>
                         </Wrapper>
